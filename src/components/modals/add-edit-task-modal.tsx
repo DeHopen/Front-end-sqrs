@@ -88,7 +88,7 @@ export const AddEditTaskModal = ({ id, trigger, initialData, editMode }: TaskFor
                   name={'text'}
                   render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Описание задачи</FormLabel>
+                        <FormLabel>Description</FormLabel>
                         <FormControl>
                           <Input placeholder={'Enter a description for the note...'} {...field} />
                         </FormControl>

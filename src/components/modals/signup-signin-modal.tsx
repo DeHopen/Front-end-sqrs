@@ -25,20 +25,22 @@ export type AuthModalProps = {
 }
 
 const formSchema = z.object({
-    text: z.string().min(1, 'Value is required'),
+    email:    z.string().min(1, "Email is required"),
+    password: z.string().min(1, "A password is required"),
 })
-
 type FormValues = z.infer<typeof formSchema>
 
-export const AuthModal = ({ trigger, initialData }: AuthModalProps) => {
+export const AuthModal = ({ trigger }: AuthModalProps) => {
     const [mode, setMode] = useState<'sign-in' | 'sign-up'>('sign-in')
     const [open, setOpen] = React.useState(false)
 
+    const defaultValues: FormValues = {
+        email: '',
+        password: '',
+    }
     const form = useForm<FormValues>({
-        resolver: zodResolver(formSchema),
-        defaultValues: initialData || {
-            text: '',
-        },
+        resolver:    zodResolver(formSchema),
+        defaultValues,
     })
 
     const onSubmit = () => {
@@ -77,10 +79,9 @@ export const AuthModal = ({ trigger, initialData }: AuthModalProps) => {
                 </div>
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className={'space-y-6 py-4'}>
-                        {/* Текст */}
                         <FormField
                             control={form.control}
-                            name={'text'}
+                            name={'email'}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Email</FormLabel>
@@ -94,7 +95,7 @@ export const AuthModal = ({ trigger, initialData }: AuthModalProps) => {
 
                         <FormField
                             control={form.control}
-                            name={'text'}
+                            name={"password"}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Password</FormLabel>

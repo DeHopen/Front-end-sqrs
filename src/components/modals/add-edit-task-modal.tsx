@@ -51,6 +51,8 @@ export const AddEditTaskModal = ({ id, trigger, initialData, editMode }: TaskFor
     resolver: zodResolver(formSchema),
     defaultValues: initialData || {
       text: '',
+      completed: false,
+      priority: 'medium',
     },
   })
 
@@ -68,41 +70,41 @@ export const AddEditTaskModal = ({ id, trigger, initialData, editMode }: TaskFor
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className={'sm:max-w-md'}>
-        <DialogHeader>
-          <DialogTitle>{isEditMode ? 'Edit note' : 'Create new note'}</DialogTitle>
-          <DialogDescription>
-            {isEditMode ? 'Edit an existing note.' : 'Add a new note to the list.'}
-          </DialogDescription>
-        </DialogHeader>
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogTrigger asChild>{trigger}</DialogTrigger>
+        <DialogContent className={'sm:max-w-md'}>
+          <DialogHeader>
+            <DialogTitle>{isEditMode ? 'Edit note' : 'Create new note'}</DialogTitle>
+            <DialogDescription>
+              {isEditMode ? 'Edit an existing note.' : 'Add a new note to the list.'}
+            </DialogDescription>
+          </DialogHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className={'space-y-6 py-4'}>
-            {/* Текст */}
-            <FormField
-              control={form.control}
-              name={'text'}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input placeholder={'Enter a description for the note...'} {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className={'space-y-6 py-4'}>
+              {/* Текст */}
+              <FormField
+                  control={form.control}
+                  name={'text'}
+                  render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Описание задачи</FormLabel>
+                        <FormControl>
+                          <Input placeholder={'Enter a description for the note...'} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                  )}
+              />
 
-            <DialogFooter>
-              <Button type={'submit'} className={'w-full'}>
-                {isEditMode ? 'Edit note' : 'Create new note'}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+              <DialogFooter>
+                <Button type={'submit'} className={'w-full'}>
+                  {isEditMode ? 'Edit note' : 'Create new note'}
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
   )
 }
